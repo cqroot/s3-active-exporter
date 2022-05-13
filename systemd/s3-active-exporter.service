@@ -1,0 +1,10 @@
+[Unit]
+Description=Prometheus Exporter for active testing of S3 storage.
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/s3-active-exporter/bin/s3-active-exporter
+
+[Install]
+WantedBy=multi-user.target
