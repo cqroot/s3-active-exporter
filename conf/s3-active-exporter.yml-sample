@@ -1,0 +1,15 @@
+web:
+  listen-address: :9180
+  telemetry-path: /metrics
+  max-requests: 30
+log:
+  debug: true
+  verbose: false
+s3:
+  access: YOUR_ACCESS_KEY
+  secret: YOUR_SECRET_KEY
+  bucket: YOUR_BUCKET
+  endpoints:
+    - HOST1:8080
+    - HOST2:8080
+    - HOST3:8080
