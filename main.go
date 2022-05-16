@@ -26,7 +26,7 @@ func main() {
 <html>
 <head><title>Swift Exporter v` + "0.0.1" + `</title></head>
 <body>
-<h1>Swift Exporter ` + internal.BuildVersion + `</h1>
+<h1>S3 Active Exporter ` + internal.BuildVersion + `</h1>
 <p><a href='` + viper.GetString("web.telemetry-path") + `'>Metrics</a></p>
 </body>
 </html>
