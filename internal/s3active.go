@@ -63,7 +63,7 @@ func (m *S3ActiveMonitor) Run(endpoint string) (
 			"",
 		),
 		Endpoint:         aws.String(m.endpoint),
-		Region:           aws.String("default"),
+		Region:           aws.String(viper.GetString("s3.region")),
 		S3ForcePathStyle: aws.Bool(true),
 		DisableSSL:       aws.Bool(true),
 	})

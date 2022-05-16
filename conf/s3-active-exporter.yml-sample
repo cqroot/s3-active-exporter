@@ -9,6 +9,7 @@ s3:
   access: YOUR_ACCESS_KEY
   secret: YOUR_SECRET_KEY
   bucket: YOUR_BUCKET
+  region: default
   endpoints:
     - HOST1:8080
     - HOST2:8080
