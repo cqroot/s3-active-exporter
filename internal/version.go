@@ -1,5 +1,5 @@
 package internal
 
 const (
-	BuildVersion string = "v0.0.1"
+	BuildVersion string = "v0.0.2"
 )

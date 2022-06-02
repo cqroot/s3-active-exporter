@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"sync"
@@ -86,7 +87,11 @@ func (m *S3ActiveMonitor) putObject() (string, float64) {
 	data := "Hello, world!"
 	reader := strings.NewReader(data)
 
-	_, err := uploader.Upload(&s3manager.UploadInput{
+	ctx := context.Background()
+	ctx, cancelFn := context.WithTimeout(ctx, time.Duration(viper.GetInt64("s3.timeout")*1000000000))
+	defer cancelFn()
+
+	_, err := uploader.UploadWithContext(ctx, &s3manager.UploadInput{
 		Bucket: aws.String(bucket),
 		Key:    aws.String(m.filename),
 		Body:   reader,
@@ -102,8 +107,12 @@ func (m *S3ActiveMonitor) putObject() (string, float64) {
 func (m *S3ActiveMonitor) getObject() (string, float64) {
 	downloader := s3manager.NewDownloader(m.sess)
 
+	ctx := context.Background()
+	ctx, cancelFn := context.WithTimeout(ctx, time.Duration(viper.GetInt64("s3.timeout")*1000000000))
+	defer cancelFn()
+
 	buf := aws.NewWriteAtBuffer([]byte{})
-	_, err := downloader.Download(buf,
+	_, err := downloader.DownloadWithContext(ctx, buf,
 		&s3.GetObjectInput{
 			Bucket: aws.String(bucket),
 			Key:    aws.String(m.filename),
@@ -119,7 +128,11 @@ func (m *S3ActiveMonitor) getObject() (string, float64) {
 func (m *S3ActiveMonitor) delObject() (string, float64) {
 	svc := s3.New(m.sess)
 
-	_, err := svc.DeleteObject(&s3.DeleteObjectInput{Bucket: aws.String(bucket), Key: aws.String(m.filename)})
+	ctx := context.Background()
+	ctx, cancelFn := context.WithTimeout(ctx, time.Duration(viper.GetInt64("s3.timeout")*1000000000))
+	defer cancelFn()
+
+	_, err := svc.DeleteObjectWithContext(ctx, &s3.DeleteObjectInput{Bucket: aws.String(bucket), Key: aws.String(m.filename)})
 	if err != nil {
 		logger.Error(err.Error())
 		return err.Error(), 0

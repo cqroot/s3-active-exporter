@@ -31,6 +31,9 @@ func InitConfig() {
 	viper.SetDefault("log.debug", defaultLogDebug)
 	viper.SetDefault("log.verbose", defaultLogVerbose)
 
+	viper.SetDefault("s3.region", "default")
+	viper.SetDefault("s3.timeout", 30)
+
 	// Pflag parse
 	flag.Parse()
 	viper.BindPFlags(flag.CommandLine)

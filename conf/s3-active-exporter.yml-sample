@@ -10,6 +10,7 @@ s3:
   secret: YOUR_SECRET_KEY
   bucket: YOUR_BUCKET
   region: default
+  timeout: 30
   endpoints:
     - HOST1:8080
     - HOST2:8080
